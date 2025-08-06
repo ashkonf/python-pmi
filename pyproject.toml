@@ -1,0 +1,25 @@
+[project]
+name = "python-pmi"
+version = "0.1.0"
+description = "Pointwise Mutual Information calculator"
+readme = "readme.md"
+requires-python = ">=3.11"
+license = {file = "LICENSE"}
+dependencies = []
+
+[tool.uv]
+dev-dependencies = [
+  "pre-commit",
+  "pytest",
+  "pytest-cov",
+  "ruff",
+  "pyright"
+]
+
+[tool.pyright]
+pythonVersion = "3.11"
+typeCheckingMode = "basic"
+
+[tool.ruff]
+line-length = 88
+

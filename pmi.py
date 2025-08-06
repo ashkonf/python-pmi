@@ -1,38 +1,46 @@
-import sys
-import os
-import collections
-import math
+from __future__ import annotations
+
+from collections import defaultdict
+from collections.abc import Iterable, KeysView
+
 
 class PMICalculator:
+    """Compute pointwise mutual information for label-word pairs."""
 
-    def __init__(self):
-        self.label_counts = None
-        self.word_counts = None
-        self.joint_counts = None
-        self.num_pairs = None
+    def __init__(self) -> None:
+        self.label_counts: defaultdict[str, float] = defaultdict(float)
+        self.word_counts: defaultdict[str, float] = defaultdict(float)
+        self.joint_counts: defaultdict[str, defaultdict[str, float]] = defaultdict(
+            lambda: defaultdict(float)
+        )
+        self.num_pairs: int = 0
 
-    def train(self, corpus, smoothing_factor=0.0):
-        self.label_counts = collections.defaultdict(lambda: smoothing_factor)
-        self.word_counts = collections.defaultdict(lambda: smoothing_factor)
-        self.joint_counts = collections.defaultdict(lambda: collections.defaultdict(lambda: smoothing_factor))
+    def train(
+        self, corpus: Iterable[tuple[str, Iterable[str]]], smoothing_factor: float = 0.0
+    ) -> None:
+        self.label_counts = defaultdict(lambda: smoothing_factor)
+        self.word_counts = defaultdict(lambda: smoothing_factor)
+        self.joint_counts = defaultdict(lambda: defaultdict(lambda: smoothing_factor))
         self.num_pairs = 0
 
         for label, document in corpus:
             for word in document:
-                weight = 1.0
-                self.label_counts[label] += 1
-                self.word_counts[word] += 1
-                self.joint_counts[label][word] += 1
+                weight: float = 1.0
+                self.label_counts[label] += weight
+                self.word_counts[word] += weight
+                self.joint_counts[label][word] += weight
                 self.num_pairs += 1
 
-    def key_set(self, label):
+    def key_set(self, label: str) -> KeysView[str]:
         return self.joint_counts[label].keys()
 
-    def pmi(self, label, word):
-        joint_prob = float(self.joint_counts[label][word]) / float(self.num_pairs)
-        label_prob = float(self.label_counts[label]) / float(self.num_pairs)
-        word_prob = float(self.word_counts[word]) / float(self.num_pairs)
+    def pmi(self, label: str, word: str) -> float:
+        joint_prob: float = float(self.joint_counts[label][word]) / float(
+            self.num_pairs
+        )
+        label_prob: float = float(self.label_counts[label]) / float(self.num_pairs)
+        word_prob: float = float(self.word_counts[word]) / float(self.num_pairs)
         return joint_prob / (label_prob * word_prob)
 
-    def count(self, word):
+    def count(self, word: str) -> float:
         return self.word_counts[word]
