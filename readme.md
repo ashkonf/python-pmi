@@ -1,26 +1,8 @@
 # Pointwise Mutual Information Calculator
 
-## Contents
-
-- [Overview](#Overview)
-- [Dependencies](#Dependencies)
-- [Usage](#Usage)
-- [Training](#Training)
-- [Example](#Example)
-- [Testing](#Testing)
-- [License](#License)
-- [Links](#Links)
-
-## Overview
-
 The Pointwise Mutual Information (PMI) Calculator repository provides a Python implementation of the PMI measure, which is used to compute the similarity of words and their associated categories according to the following equation:
 
 ![PMI Equation](https://wikimedia.org/api/rest_v1/media/math/render/svg/ff54cfce726857db855d4dd0a9dee2c6a5e7be99)
-
-# Pointwise Mutual Information Calculator
-
-A minimal implementation of the pointwise mutual information (PMI) metric for
-label–word pairs.
 
 ## Table of Contents
 - [Installation](#installation)
@@ -98,4 +80,5 @@ sample corpus.
 ## License
 
 This project is licensed under the
+
 [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
