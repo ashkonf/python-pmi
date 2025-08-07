@@ -75,3 +75,20 @@ def test_smoothing_factor() -> None:
     assert calc.count("missing") == 1.0
     assert "y" in calc.key_set("x")
 
+
+def test_expected_pmi_value() -> None:
+    """Test PMI equals the joint to marginal probability ratio."""
+    corpus = [("label1", ["a"]), ("label2", ["b"])]
+    calc = PMICalculator()
+    calc.train(corpus)
+
+    assert calc.pmi("label1", "a") == 2.0
+
+
+def test_unseen_pair_pmi_is_zero() -> None:
+    """Test PMI is zero for label-word pairs not in the corpus."""
+    corpus = [("label1", ["a"]), ("label2", ["b"])]
+    calc = PMICalculator()
+    calc.train(corpus)
+
+    assert calc.pmi("label1", "b") == 0.0
