@@ -1,11 +1,59 @@
-from pathlib import Path
+import math
 import sys
+from pathlib import Path
+import os
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from pmi import PMICalculator
 
 
+def build_calculator():
+    calc = PMICalculator()
+    corpus = [
+        ("label1", ["word1", "word2"]),
+        ("label2", ["word1"]),
+    ]
+    calc.train(corpus)
+    return calc
+
+
+def test_count_and_key_set():
+    calc = build_calculator()
+    assert calc.count("word1") == 2
+    assert calc.count("word2") == 1
+    assert set(calc.key_set("label1")) == {"word1", "word2"}
+    assert set(calc.key_set("label2")) == {"word1"}
+
+
+def test_pmi_values():
+    calc = build_calculator()
+    assert math.isclose(calc.pmi("label1", "word1"), 0.75)
+    assert math.isclose(calc.pmi("label2", "word1"), 1.5)
+    assert math.isclose(calc.pmi("label1", "word2"), 1.5)
+
+    
+@pytest.fixture
+def trained_calc():
+    corpus = [('A', ['x', 'y']), ('B', ['x'])]
+    calc = PMICalculator()
+    calc.train(corpus)
+    return calc
+
+  
+def test_pmi_values(trained_calc):
+    assert trained_calc.pmi('A', 'x') == pytest.approx(0.75)
+    assert trained_calc.pmi('B', 'x') == pytest.approx(1.5)
+
+    
+def test_key_set(trained_calc):
+    assert set(trained_calc.key_set('A')) == {'x', 'y'}
+
+    
+def test_count(trained_calc):
+    assert trained_calc.count('x') == 2
+
+    
 def test_pmi_counts_and_keyset() -> None:
     """Test counting words and retrieving key sets."""
     corpus = [("label1", ["a", "b"]), ("label2", ["a"])]

@@ -1,7 +1,8 @@
 # Pointwise Mutual Information Calculator
 
-A minimal implementation of the pointwise mutual information (PMI) metric for
-label–word pairs.
+The Pointwise Mutual Information (PMI) Calculator repository provides a Python implementation of the PMI measure, which is used to compute the similarity of words and their associated categories according to the following equation:
+
+![PMI Equation](https://wikimedia.org/api/rest_v1/media/math/render/svg/ff54cfce726857db855d4dd0a9dee2c6a5e7be99)
 
 ## Table of Contents
 - [Installation](#installation)
@@ -54,7 +55,30 @@ All of these checks along with the tests can be run together via pre-commit:
 uv run pre-commit run --all-files
 ```
 
+The three `print()` statements output the following:
+
+1. The words associated with "ENTERTAINMENT".
+2. The PMI (9.866219341079493) for the label "CRIME" and the word "killed".
+3. The word count for "kids".
+
+Remember that you must call the `train()` method with a suitable dataset before using the other `PMICalculator` methods.
+
+And that's it! You can now integrate the PMI Calculator repo with your application of choice.
+
+## Testing
+
+Unit tests are provided in the `tests` directory and can be run with
+[`pytest`](https://docs.pytest.org). From the project root, execute:
+
+```
+pytest -q
+```
+
+The tests verify word counts, key sets, and PMI calculations using a
+sample corpus.
+
 ## License
 
 This project is licensed under the
+
 [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
