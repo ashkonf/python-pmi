@@ -7,6 +7,7 @@
 - [Usage](#Usage)
 - [Training](#Training)
 - [Example](#Example)
+- [Testing](#Testing)
 - [License](#License)
 - [Links](#Links)
 
@@ -128,6 +129,14 @@ The three `print()` statements output the following:
 Remember that you must call the `train()` method with a suitable dataset before using the other `PMICalculator` methods.
 
 And that's it! You can now integrate the PMI Calculator repo with your application of choice.
+
+## Testing
+
+This repository includes a [pytest](https://docs.pytest.org/) test suite that verifies the `PMICalculator`'s `pmi`, `key_set`, and `count` methods. After cloning the repository and installing any desired dependencies, run the tests with:
+
+```
+pytest
+```
 
 ## License
 
