@@ -7,6 +7,7 @@ from pmi import PMICalculator
 
 
 def test_pmi_counts_and_keyset() -> None:
+    """Test counting words and retrieving key sets."""
     corpus = [("label1", ["a", "b"]), ("label2", ["a"])]
     calc = PMICalculator()
     calc.train(corpus)
@@ -18,6 +19,7 @@ def test_pmi_counts_and_keyset() -> None:
 
 
 def test_smoothing_factor() -> None:
+    """Test applying a smoothing factor to unseen words."""
     corpus = [("x", ["y"])]
     calc = PMICalculator()
     calc.train(corpus, smoothing_factor=1.0)
